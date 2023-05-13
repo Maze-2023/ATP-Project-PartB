@@ -18,26 +18,26 @@ public class MyCompressorOutputStream extends OutputStream {
     @Override
     public void write(byte[] b) throws IOException {
         // we need something smarter
-        int count = 0;
-        int bit = 0;
-        for (byte currentByte : b) {
-            for (int i = 0; i < 8; i++) {
-                int currentBit = (currentByte >> i) & 1;
-                if (currentBit == bit) {
-                    count++;
-                } else {
-                    // Output the count and bit to the stream
-                    out.write(count);
-                    out.write(bit);
-                    // Reset the count and bit for the next sequence
-                    count = 1;
-                    bit = currentBit;
-                }
+        byte count = 0;
+        byte bit = 0;
+        for (int i=2; i<b.length; i++) {
+            byte currentByte = b[i];
+            if(count == (byte) 0xFF){
+                out.write(0);
+                count = 0;
+            }
+            if (currentByte == bit)
+                count++;
+            else {
+                // Output the count and bit to the stream
+                out.write(count);
+                // Reset the count and bit for the next sequence
+                count = 1;
+                bit = currentByte;
             }
         }
         // Output the final count and bit to the stream
         out.write(count);
-        out.write(bit);
-
     }
 }
+
