@@ -20,7 +20,7 @@ public class Maze {
      */
     public Maze(int rows, int column)
     {
-        frame = new int[rows][column]; // default with 0
+        this.frame = new int[rows][column]; // default with 0
         this.rows = rows;
         this.column = column;
         this.startPoint = new Position(0,0);
@@ -28,6 +28,30 @@ public class Maze {
             this.endPoint=startPoint;
         else
             this.endPoint = new Position(rows - 1, column - 1);
+    }
+
+    /**
+     * Constructor from byte array to maze
+     * @param b_maze of the maze to build
+     */
+    public Maze(byte[]b_maze)
+    {
+        this.rows = b_maze[0];
+        this.column = b_maze[1];
+        this.frame=new int[rows][column];
+        this.startPoint = new Position(0,0);
+        if(rows == 0 && column == 0)
+            this.endPoint=startPoint;
+        else
+            this.endPoint = new Position(rows - 1, column - 1);
+
+        //change frame
+        int k = 2;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < column; j++) {
+                this.frame[i][j] = b_maze[k++];
+            }
+        }
     }
 
     /**
@@ -103,6 +127,30 @@ public class Maze {
             }
             System.out.println("]");
         }
+    }
+
+    /**
+     * the maze format:
+     * [0] - rows
+     * [1] - columns
+     * no need to save the start and end point because they are the same.
+     * [2-n] - maze itself
+     * @return
+     */
+    public byte[] toByteArray()
+    {
+        byte[] b_maze = new byte[rows*column+2];
+        b_maze[0]= (byte) rows;
+        b_maze[1]= (byte) column;
+
+        int k =2;
+        //put maze into the array
+        for(int i = 0; i<rows;i++)
+            for (int j = 0; j<column;j++)
+            {
+                b_maze[k++]= (byte) this.getCellValue(i,j);
+            }
+        return b_maze;
     }
 }
 
