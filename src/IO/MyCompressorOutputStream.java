@@ -18,6 +18,8 @@ public class MyCompressorOutputStream extends OutputStream {
     @Override
     public void write(byte[] b) throws IOException {
         // we need something smarter
+        out.write(b[0]); // row
+        out.write(b[1]); // col
         byte count = 0;
         byte bit = 0;
         for (int i=2; i<b.length; i++) {
