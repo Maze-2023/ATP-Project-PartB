@@ -5,6 +5,7 @@ import algorithms.mazeGenerators.AMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import java.io.*;
+//TODO: delete this import- arrays... it its in another class
 import java.util.Arrays;
 
 public class RunCompressDecompressMaze {
