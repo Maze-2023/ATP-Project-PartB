@@ -12,7 +12,6 @@ public class SimpleCompressorOutputStream extends OutputStream {
     }
     @Override
     public void write(int b) throws IOException {
-
     }
 
     @Override
@@ -21,7 +20,7 @@ public class SimpleCompressorOutputStream extends OutputStream {
         int bit = 0;
         for (byte currentByte : b) {
             for (int i = 0; i < 8; i++) {
-                int currentBit = (currentByte >> i) & 1;
+                int currentBit = (currentByte >> i) & 1; // took one bit everytime
                 if (currentBit == bit) {
                     count++;
                 } else {
