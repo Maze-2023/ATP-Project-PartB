@@ -2,6 +2,8 @@ package IO;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.zip.DataFormatException;
+import java.util.zip.Inflater;
 
 public class MyDecompressorInputStream extends InputStream {
 
@@ -18,19 +20,21 @@ public class MyDecompressorInputStream extends InputStream {
 
     @Override
     public int read(byte[] b) throws IOException {
-        byte[] inputBytes = in.readAllBytes();
-        b[0] = inputBytes[0];
-        b[1] = inputBytes[1];
-        int index = 2;
-        byte currentByte = 1;
-        for(int i=2; i<inputBytes.length; i++){
-            byte amount = inputBytes[i];
-            int counter = 0;
-            currentByte = (byte) ((currentByte + 1) % 2);
-            while(counter < amount){
-                b[index++] = currentByte;
-                counter++;
+        byte[] decompressedData = in.readAllBytes();
+        Inflater inflater = new Inflater();
+        inflater.setInput(decompressedData);
+        int decompressedDataLength = b.length;
+
+        try {
+            while (!inflater.finished()) {
+                int count = inflater.inflate(decompressedData);
+                System.arraycopy(decompressedData, 0, b, decompressedDataLength, count);
+                decompressedDataLength += count;
             }
+        } catch (DataFormatException e) {
+            // handle the exception
+        } finally {
+            inflater.end();
         }
         return 0;
     }
