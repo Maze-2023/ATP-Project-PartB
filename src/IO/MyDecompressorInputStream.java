@@ -1,7 +1,9 @@
 package IO;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
@@ -20,22 +22,21 @@ public class MyDecompressorInputStream extends InputStream {
 
     @Override
     public int read(byte[] b) throws IOException {
-        byte[] decompressedData = in.readAllBytes();
-        Inflater inflater = new Inflater();
-        inflater.setInput(decompressedData);
-        int decompressedDataLength = b.length;
+        // read all the bytes from the input stream
+        byte[] compressedData = in.readAllBytes();
 
+        // decode the base64 encoded data
+        byte[] decodedData = Base64.getDecoder().decode(compressedData);
+
+        // decompress the decoded data
+        Inflater inflater = new Inflater();
+        inflater.setInput(decodedData);
         try {
-            while (!inflater.finished()) {
-                int count = inflater.inflate(decompressedData);
-                System.arraycopy(decompressedData, 0, b, decompressedDataLength, count);
-                decompressedDataLength += count;
-            }
+            inflater.inflate(b);
         } catch (DataFormatException e) {
-            // handle the exception
-        } finally {
-            inflater.end();
+            throw new RuntimeException(e);
         }
+        inflater.end();
         return 0;
     }
 }
