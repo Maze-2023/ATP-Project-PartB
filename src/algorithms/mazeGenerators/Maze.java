@@ -39,14 +39,14 @@ public class Maze {
         this.rows = b_maze[0];
         this.column = b_maze[1];
         this.frame=new int[rows][column];
-        this.startPoint = new Position(0,0);
+        this.startPoint = new Position(b_maze[2],b_maze[3]);
         if(rows == 0 && column == 0)
             this.endPoint=startPoint;
         else
-            this.endPoint = new Position(rows - 1, column - 1);
+            this.endPoint = new Position(b_maze[4], b_maze[5]);
 
         //change frame
-        int k = 2;
+        int k = 6;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < column; j++) {
                 this.frame[i][j] = b_maze[k++];
@@ -142,8 +142,12 @@ public class Maze {
         byte[] b_maze = new byte[rows*column+2];
         b_maze[0]= (byte) rows;
         b_maze[1]= (byte) column;
+        b_maze[2]= (byte) startPoint.getRowIndex();
+        b_maze[3]= (byte) startPoint.getColumnIndex();
+        b_maze[4]= (byte) endPoint.getRowIndex();
+        b_maze[5]= (byte) endPoint.getColumnIndex();
 
-        int k =2;
+        int k =6;
         //put maze into the array
         for(int i = 0; i<rows;i++)
             for (int j = 0; j<column;j++)
