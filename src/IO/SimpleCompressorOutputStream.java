@@ -18,7 +18,10 @@ public class SimpleCompressorOutputStream extends OutputStream {
     public void write(byte[] b) throws IOException {
         byte count = 0;
         byte bit = 0;
-        for (int i=2; i<b.length; i++) {
+        for (int i=0; i<6; i++) {
+            out.write(b[i]);
+        }
+        for (int i=6; i<b.length; i++) {
             byte currentByte = b[i];
             if(count == (byte) 0xFF){
                 out.write(0);

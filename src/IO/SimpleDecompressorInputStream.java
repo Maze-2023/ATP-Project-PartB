@@ -17,9 +17,13 @@ public class SimpleDecompressorInputStream extends InputStream {
         byte[] inputBytes = in.readAllBytes();
         b[0] = inputBytes[0];
         b[1] = inputBytes[1];
-        int index = 2;
+        b[2] = inputBytes[2];
+        b[3] = inputBytes[3];
+        b[4] = inputBytes[4];
+        b[5] = inputBytes[5];
+        int index = 6;
         byte currentByte = 1;
-        for(int i=2; i<inputBytes.length; i++){
+        for(int i=6; i<inputBytes.length; i++){
             byte amount = inputBytes[i];
             int counter = 0;
             currentByte = (byte) ((currentByte + 1) % 2);

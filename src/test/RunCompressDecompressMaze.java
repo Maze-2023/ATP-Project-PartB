@@ -1,18 +1,19 @@
 package test;
 import IO.MyCompressorOutputStream;
 import IO.MyDecompressorInputStream;
+import IO.SimpleCompressorOutputStream;
+import IO.SimpleDecompressorInputStream;
 import algorithms.mazeGenerators.AMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import java.io.*;
-//TODO: delete this import- arrays... it its in another class
 import java.util.Arrays;
 
 public class RunCompressDecompressMaze {
     public static void main(String[] args) {
         String mazeFileName = "savedMaze.maze";
         AMazeGenerator mazeGenerator = new MyMazeGenerator();
-        Maze maze = mazeGenerator.generate(100, 100); //Generate new maze
+        Maze maze = mazeGenerator.generate(3, 3); //Generate new maze
         try {
 // save maze to a file
             OutputStream out = new MyCompressorOutputStream(new

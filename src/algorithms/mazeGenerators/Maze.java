@@ -139,7 +139,7 @@ public class Maze {
      */
     public byte[] toByteArray()
     {
-        byte[] b_maze = new byte[rows*column+2];
+        byte[] b_maze = new byte[rows*column+6];
         b_maze[0]= (byte) rows;
         b_maze[1]= (byte) column;
         b_maze[2]= (byte) startPoint.getRowIndex();
