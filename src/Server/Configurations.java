@@ -1,6 +1,5 @@
 package Server;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -10,23 +9,28 @@ public class Configurations {
     private static Configurations instance;
     Properties properties;
 
-    // Private constructor to prevent instantiation from outside the class
+    /**
+     * Private constructor to prevent instantiation from outside the class.
+     * Initializes the configurations and stores them in a properties file.
+     */
     private Configurations() {
-        try{
+        try {
             OutputStream outputStream = new FileOutputStream("resources\\config.properties");
             properties = new Properties();
-            int num = Runtime.getRuntime().availableProcessors();
-            properties.setProperty("threadPoolSize", String.valueOf(num));
+            int size = Runtime.getRuntime().availableProcessors();
+            properties.setProperty("threadPoolSize", String.valueOf(size));
             properties.setProperty("mazeGeneratingAlgorithm", "MyMazeGenerator");
             properties.setProperty("mazeSearchingAlgorithm", "BestFirstSearch");
             properties.store(outputStream, null);
-
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Public static method to get the singleton instance
+    /**
+     * Returns the singleton instance of the Configurations class.
+     * @return the Configurations instance
+     */
     public static Configurations getInstance() {
         if (instance == null) {
             // Create a new instance only if it doesn't exist
@@ -34,11 +38,4 @@ public class Configurations {
         }
         return instance;
     }
-
-    // Other methods of the singleton class
-    public void doSomething() {
-        // Implementation
-    }
-
-
 }

@@ -8,6 +8,7 @@ import java.io.OutputStream;
 public class MyCompressorOutputStream extends OutputStream {
 
     OutputStream out;
+    // constructor
     public MyCompressorOutputStream(OutputStream out){
         this.out = out;
 

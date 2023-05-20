@@ -1,6 +1,6 @@
 package algorithms.search;
 import algorithms.mazeGenerators.*;
-
+import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -41,7 +41,7 @@ class BestFirstSearchTest {
     private SearchableMaze s_mMyMaze2 = new SearchableMaze(MyMaze2);
     private SearchableMaze s_mMyMaze3 = new SearchableMaze(MyMaze3);//checked
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getName() {
        assert (Objects.equals(bestFirstSearch.getName(), "Best First Search"));
     }
@@ -85,7 +85,7 @@ class BestFirstSearchTest {
         return true;
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void solve()
     {
         Solution solution;
