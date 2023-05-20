@@ -27,6 +27,7 @@ public class Server {
         this.port = port;
         this.listeningIntervalMS = listeningIntervalMS;
         this.strategy = strategy;
+        this.stop = false;
         this.threadPool = Executors.newFixedThreadPool(Integer.parseInt(Configurations.getInstance().properties.getProperty("threadPoolSize")));
     }
 
@@ -52,7 +53,8 @@ public class Server {
                     System.out.println("Client accepted: " + clientSocket.toString());
 
                     // Handle the client request in a separate thread from the thread pool
-                    threadPool.execute(new Thread(() -> handleClient(clientSocket)));
+                    Thread newThread = new Thread(() -> handleClient(clientSocket));
+                    threadPool.execute(newThread);
                 } catch (SocketTimeoutException e) {
                     System.out.println("Socket timeout");
                 }
