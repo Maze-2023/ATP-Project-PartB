@@ -1,9 +1,11 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
+
 /**
  * This class save the coordinates of a specific point in 2D maze
  */
-public class Position {
+public class Position implements Serializable {
     private int row;
     private int colum;
 

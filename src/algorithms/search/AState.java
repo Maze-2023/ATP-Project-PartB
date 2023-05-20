@@ -1,6 +1,7 @@
 package algorithms.search;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.LinkedList;
  * makes each state hold it neighbours which represents possible routes in the solution
  * Includes the parent state, color(white, grey or black), value and cost.
  */
-public abstract class AState {
+public abstract class AState implements Serializable {
 
     //variables
     protected AState parent;

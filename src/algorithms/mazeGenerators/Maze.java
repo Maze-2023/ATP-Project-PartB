@@ -1,10 +1,12 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
+
 /**
  * Class 2D Maze
  * every maze had frame (the map), rows, columns, start and end point.
  */
-public class Maze {
+public class Maze implements Serializable {
 
     private int[][] frame;
     private int rows;
@@ -155,6 +157,18 @@ public class Maze {
                 b_maze[k++]= (byte) this.getCellValue(i,j);
             }
         return b_maze;
+    }
+
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+        for (int i = 0; i < frame.length; i++) {
+            for (int j = 0; j < frame[i].length; j++) {
+                result = prime * result + frame[i][j];
+            }
+        }
+        return result;
     }
 }
 
