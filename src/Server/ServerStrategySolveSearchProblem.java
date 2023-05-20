@@ -5,7 +5,13 @@ import algorithms.search.*;
 
 import java.io.*;
 
-public class ServerStrategySolveSearchProblem implements IServerStrategy{
+public class ServerStrategySolveSearchProblem implements IServerStrategy {
+
+    /**
+     * Applies the server strategy to solve a search problem based on the received maze and send the solution back to the client.
+     * @param inFromClient  The input stream from the client.
+     * @param outToClient   The output stream to the client.
+     */
     @Override
     public void applyStrategy(InputStream inFromClient, OutputStream outToClient) {
         try {
@@ -14,11 +20,13 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
 
             Maze inputMaze = (Maze) fromClient.readObject();
 
+            // Generate a unique filename based on the hash code of the input maze
             String fileName =  System.getProperty("java.io.tmpdir") + inputMaze.toString().hashCode();
             File file = new File(fileName);
             Solution solution;
-            // if the maze solved before
-            if(!file.exists()){
+
+            // If the maze has not been solved before
+            if (!file.exists()) {
                 solution = Solve(inputMaze);
 
                 FileOutputStream outStream = new FileOutputStream(fileName);
@@ -26,12 +34,13 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
 
                 fileObjectOut.writeObject(solution);
                 fileObjectOut.close();
-            }
-            else{
+            } else { // If the maze has been solved before, retrieve the solution from the file
                 FileInputStream inputStream = new FileInputStream(fileName);
                 ObjectInputStream fileObjectIn = new ObjectInputStream(inputStream);
                 solution = (Solution) fileObjectIn.readObject();
             }
+
+            // Send the solution to the client
             toClient.writeObject(solution);
             toClient.flush();
             fromClient.close();
@@ -41,15 +50,23 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
         }
     }
 
-    private Solution Solve(Maze maze){
+    /**
+     * Solves the maze using the configured searching algorithm
+     * @param maze  The maze to be solved.
+     * @return      The solution to the maze.
+     */
+    private Solution Solve(Maze maze) {
         String algorithm = Configurations.getInstance().properties.getProperty("mazeSearchingAlgorithm");
         ASearchingAlgorithm searchAlgo = null;
-        if(algorithm.equals("BestFirstSearch"))
+
+        // Determine the searching algorithm based on the configured algorithm
+        if (algorithm.equals("BestFirstSearch"))
             searchAlgo = new BestFirstSearch();
-        else if(algorithm.equals("BreadthFirstSearch"))
+        else if (algorithm.equals("BreadthFirstSearch"))
             searchAlgo = new BreadthFirstSearch();
-        else if(algorithm.equals("DepthFirstSearch"))
+        else if (algorithm.equals("DepthFirstSearch"))
             searchAlgo = new DepthFirstSearch();
+
         ISearchable searchProb = new SearchableMaze(maze);
         return searchAlgo.solve(searchProb);
     }
