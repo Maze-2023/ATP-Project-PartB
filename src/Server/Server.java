@@ -19,7 +19,7 @@ public class Server {
         this.port = port;
         this.listeningIntervalMS = listeningIntervalMS;
         this.strategy = strategy;
-        this.threadPool = Executors.newFixedThreadPool(5);
+        this.threadPool = Executors.newFixedThreadPool(Integer.parseInt(Configurations.getInstance().properties.getProperty("threadPoolSize")));
     }
 
     public void start()

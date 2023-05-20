@@ -1,11 +1,7 @@
 package Server;
 
-import IO.MyCompressorOutputStream;
-import algorithms.mazeGenerators.Maze;
-import algorithms.search.BestFirstSearch;
-import algorithms.search.ISearchable;
-import algorithms.search.SearchableMaze;
-import algorithms.search.Solution;
+import algorithms.mazeGenerators.*;
+import algorithms.search.*;
 
 import java.io.*;
 
@@ -46,8 +42,15 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
     }
 
     private Solution Solve(Maze maze){
-        BestFirstSearch bestFirstSearch = new BestFirstSearch();
+        String algorithm = Configurations.getInstance().properties.getProperty("mazeSearchingAlgorithm");
+        ASearchingAlgorithm searchAlgo = null;
+        if(algorithm.equals("BestFirstSearch"))
+            searchAlgo = new BestFirstSearch();
+        else if(algorithm.equals("BreadthFirstSearch"))
+            searchAlgo = new BreadthFirstSearch();
+        else if(algorithm.equals("DepthFirstSearch"))
+            searchAlgo = new DepthFirstSearch();
         ISearchable searchProb = new SearchableMaze(maze);
-        return bestFirstSearch.solve(searchProb);
+        return searchAlgo.solve(searchProb);
     }
 }

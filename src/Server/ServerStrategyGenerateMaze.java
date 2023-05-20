@@ -1,8 +1,8 @@
 package Server;
 
 import IO.MyCompressorOutputStream;
-import algorithms.mazeGenerators.MyMazeGenerator;
-import algorithms.mazeGenerators.Maze;
+import algorithms.mazeGenerators.*;
+
 import java.io.*;
 
 public class ServerStrategyGenerateMaze implements IServerStrategy {
@@ -25,7 +25,16 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
     }
 
     private byte[] createCompressedMaze(int[] size) {
-        MyMazeGenerator mazeGenerator = new MyMazeGenerator();
+        String algorithm = Configurations.getInstance().properties.getProperty("mazeGeneratingAlgorithm");
+        AMazeGenerator mazeGenerator = null;
+        if(algorithm.equals("MyMazeGenerator"))
+            mazeGenerator = new MyMazeGenerator();
+        else if(algorithm.equals("EmptyMazeGenerator"))
+            mazeGenerator = new EmptyMazeGenerator();
+        else if(algorithm.equals("SimpleMazeGenerator"))
+            mazeGenerator = new SimpleMazeGenerator();
+
+        assert mazeGenerator != null;
         Maze maze = mazeGenerator.generate(size[0], size[1]);
         ByteArrayOutputStream compressedOutput = new ByteArrayOutputStream();
         OutputStream out = new MyCompressorOutputStream(compressedOutput);
