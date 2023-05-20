@@ -27,7 +27,6 @@ public class Server {
         this.port = port;
         this.listeningIntervalMS = listeningIntervalMS;
         this.strategy = strategy;
-        this.stop = false;
         this.threadPool = Executors.newFixedThreadPool(Integer.parseInt(Configurations.getInstance().properties.getProperty("threadPoolSize")));
     }
 
@@ -47,21 +46,24 @@ public class Server {
             serverSocket.setSoTimeout(listeningIntervalMS);
             System.out.println("Starting server at port = " + port);
 
-            while (!stop) {
+            while (true) {
+                synchronized ((Object) stop){
+                    if(stop)
+                        break;
+                }
                 try {
                     Socket clientSocket = serverSocket.accept();
                     System.out.println("Client accepted: " + clientSocket.toString());
-
                     // Handle the client request in a separate thread from the thread pool
                     Thread newThread = new Thread(() -> handleClient(clientSocket));
                     threadPool.execute(newThread);
                 } catch (SocketTimeoutException e) {
                     System.out.println("Socket timeout");
+                    break;
                 }
-
-                // Shut down the thread pool after handling a single client connection
-                threadPool.shutdown();
             }
+            // Shut down the thread pool after handling a single client connection
+            threadPool.shutdown();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,6 +86,9 @@ public class Server {
      * Stops the server by setting the stop flag.
      */
     public void stop() {
-        stop = true;
+        synchronized ((Object) stop){
+            stop = true;
+        }
+
     }
 }

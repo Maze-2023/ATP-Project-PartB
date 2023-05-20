@@ -3,6 +3,7 @@ package algorithms.search;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Class that gets a maze and converts it to be searchable in the generic way so that all solve
  * algorithms can solve it.
  */
-public class SearchableMaze implements ISearchable{
+public class SearchableMaze implements ISearchable, Serializable {
 
     //variables
      private Maze maze;

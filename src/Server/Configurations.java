@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
+import java.util.Random;
 
 public class Configurations {
     private static Configurations instance;
@@ -17,7 +18,7 @@ public class Configurations {
         try {
             OutputStream outputStream = new FileOutputStream("resources\\config.properties");
             properties = new Properties();
-            int size = Runtime.getRuntime().availableProcessors();
+            int size = 5;
             properties.setProperty("threadPoolSize", String.valueOf(size));
             properties.setProperty("mazeGeneratingAlgorithm", "MyMazeGenerator");
             properties.setProperty("mazeSearchingAlgorithm", "BestFirstSearch");

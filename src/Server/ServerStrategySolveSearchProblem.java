@@ -23,24 +23,24 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             // Generate a unique filename based on the hash code of the input maze
             String fileName =  System.getProperty("java.io.tmpdir") + inputMaze.toString().hashCode();
             File file = new File(fileName);
-            Solution solution;
+            Solution solution = new Solution();
 
             // If the maze has not been solved before
             if (!file.exists()) {
                 solution = Solve(inputMaze);
-
                 FileOutputStream outStream = new FileOutputStream(fileName);
                 ObjectOutputStream fileObjectOut = new ObjectOutputStream(outStream);
 
                 fileObjectOut.writeObject(solution);
                 fileObjectOut.close();
+
             } else { // If the maze has been solved before, retrieve the solution from the file
                 FileInputStream inputStream = new FileInputStream(fileName);
                 ObjectInputStream fileObjectIn = new ObjectInputStream(inputStream);
                 solution = (Solution) fileObjectIn.readObject();
-            }
+                fileObjectIn.close();
 
-            // Send the solution to the client
+            }
             toClient.writeObject(solution);
             toClient.flush();
             fromClient.close();
@@ -58,7 +58,6 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
     private Solution Solve(Maze maze) {
         String algorithm = Configurations.getInstance().properties.getProperty("mazeSearchingAlgorithm");
         ASearchingAlgorithm searchAlgo = null;
-
         // Determine the searching algorithm based on the configured algorithm
         if (algorithm.equals("BestFirstSearch"))
             searchAlgo = new BestFirstSearch();
@@ -66,8 +65,8 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             searchAlgo = new BreadthFirstSearch();
         else if (algorithm.equals("DepthFirstSearch"))
             searchAlgo = new DepthFirstSearch();
-
         ISearchable searchProb = new SearchableMaze(maze);
+        assert searchAlgo != null;
         return searchAlgo.solve(searchProb);
     }
 }
