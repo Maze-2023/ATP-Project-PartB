@@ -1,12 +1,13 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * An abstract class which implements IMazeGenerator
  */
 
-public abstract class AMazeGenerator implements IMazeGenerator {
+public abstract class AMazeGenerator implements IMazeGenerator, Serializable {
 
     /**
      * This function calculate the time for "generate" function of 2D maze

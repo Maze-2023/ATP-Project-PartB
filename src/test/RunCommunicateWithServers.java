@@ -79,7 +79,7 @@ public class RunCommunicateWithServers {
                                         ObjectInputStream(inFromServer);
                                 toServer.flush();
                                 MyMazeGenerator mg = new MyMazeGenerator();
-                                Maze maze = mg.generate(10, 10);
+                                Maze maze = mg.generate(50, 50);
                                 maze.print();
                                 toServer.writeObject(maze); //send maze to server
                                 toServer.flush();
