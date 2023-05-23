@@ -1,8 +1,5 @@
 package algorithms.search;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,7 +9,8 @@ import java.util.ArrayList;
 public class Solution implements Serializable {
 
     //variables
-    private ArrayList<AState> solutionPath;
+    private final ArrayList<AState> solutionPath;
+
 
     //constructor
     public Solution()

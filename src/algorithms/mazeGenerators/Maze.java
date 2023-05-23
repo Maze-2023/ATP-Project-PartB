@@ -137,7 +137,7 @@ public class Maze implements Serializable {
      * [1] - columns
      * no need to save the start and end point because they are the same.
      * [2-n] - maze itself
-     * @return
+     * @return maze by a byte-array
      */
     public byte[] toByteArray()
     {
@@ -163,9 +163,9 @@ public class Maze implements Serializable {
     public int hashCode() {
         int prime = 31;
         int result = 1;
-        for (int i = 0; i < frame.length; i++) {
-            for (int j = 0; j < frame[i].length; j++) {
-                result = prime * result + frame[i][j];
+        for (int[] ints : frame) {
+            for (int anInt : ints) {
+                result = prime * result + anInt;
             }
         }
         return result;
