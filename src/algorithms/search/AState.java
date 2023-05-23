@@ -50,10 +50,12 @@ public abstract class AState implements Serializable {
     //methods regarding neighbours
     public void addToNeighbors(AState state)
     {
-        neighbors.add(state);
+        if (state != this)
+                neighbors.add(state);
     }
     public void removeFromNeighbors(AState state)
     {
         neighbors.remove(state);
     }
+
 }

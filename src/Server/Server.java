@@ -63,7 +63,9 @@ public class Server {
                 }
             }
             // Shut down the thread pool after handling a single client connection
+            serverSocket.close();
             threadPool.shutdown();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,6 +90,7 @@ public class Server {
     public void stop() {
         synchronized ((Object) stop){
             stop = true;
+            threadPool.shutdownNow();
         }
 
     }

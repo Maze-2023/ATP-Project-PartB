@@ -21,7 +21,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             Maze inputMaze = (Maze) fromClient.readObject();
 
             // Generate a unique filename based on the hash code of the input maze
-            String fileName =  System.getProperty("java.io.tmpdir") + inputMaze.toString().hashCode();
+            String fileName = System.getProperty("java.io.tmpdir") + inputMaze.toString().hashCode();
             File file = new File(fileName);
             Solution solution = new Solution();
 
@@ -39,8 +39,8 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
                 ObjectInputStream fileObjectIn = new ObjectInputStream(inputStream);
                 solution = (Solution) fileObjectIn.readObject();
                 fileObjectIn.close();
-
             }
+
             toClient.writeObject(solution);
             toClient.flush();
             fromClient.close();
