@@ -15,7 +15,7 @@ public class MazeState extends AState {
     public MazeState(Position position, int value)
     {
         super(value);
-        this.position = position;
+        this.position = new Position(position);
     }
 
     //getter

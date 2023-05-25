@@ -28,7 +28,6 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             // If the maze has not been solved before
             if (!file.exists()) {
                 solution = Solve(inputMaze);
-
                 FileOutputStream outStream = new FileOutputStream(fileName);
                 ObjectOutputStream fileObjectOut = new ObjectOutputStream(outStream);
 
@@ -41,6 +40,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
                 solution = (Solution) fileObjectIn.readObject();
                 fileObjectIn.close();
             }
+
             toClient.writeObject(solution);
             toClient.flush();
             fromClient.close();

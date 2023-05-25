@@ -19,7 +19,7 @@ public class SearchableMaze implements ISearchable, Serializable {
      MazeState start;
      MazeState goal;
 
-     private List<AState> possibleStates;
+     private ArrayList<AState> possibleStates;
 
     /**
      * Create a searchable maze with an existing maze, start and goal points
@@ -124,7 +124,7 @@ public class SearchableMaze implements ISearchable, Serializable {
      * Possible Sates are paths only
      * @return List of all opposable AStates that can be in the solution
      */
-    public List<AState> resetPossibleStates()
+    public ArrayList<AState> resetPossibleStates()
     {
         this.possibleStates = new ArrayList<>();
         for (int i = 0; i < maze.getRows(); i ++){
@@ -180,7 +180,7 @@ public class SearchableMaze implements ISearchable, Serializable {
      * @return a list of states which create a legal solution
      */
     @Override
-    public List<AState> getAllPossibleStates(List<AState> states)
+    public ArrayList<AState> getAllPossibleStates(List<AState> states)
     {
         this.possibleStates = new ArrayList<>();
         for(AState s: states){

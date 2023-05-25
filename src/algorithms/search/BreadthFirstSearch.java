@@ -1,6 +1,7 @@
 package algorithms.search;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -18,7 +19,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
      * Constructor
      */
     public BreadthFirstSearch() {
-        Q = new LinkedList<>();
+        this.Q = new LinkedList<AState>();
     }
 
     /**
@@ -29,7 +30,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
      */
     private void BFS(ISearchable searchProblem, AState start) {
         /* initialized the search problem's states */
-        List<AState> possibleStates = searchProblem.resetPossibleStates();
+        ArrayList<AState> possibleStates = searchProblem.resetPossibleStates();
         for (AState v : possibleStates) {
             v.setParent(null);
             v.setColor(Color.white);
@@ -72,15 +73,6 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
         Solution solution = new Solution();
         AState start = domain.getStart();
         BFS(domain, start);
-        solution.addToPath(domain.getGoal()); // start from the end to promise a legal path
-        AState currentState = domain.getGoal();
-
-        //backtrack to get solution path
-        while (currentState.getParent() != null) { // run until start (parent is null)
-            solution.addToPath(currentState.getParent());
-            numOfNode++;
-            currentState = currentState.getParent();
-        }
-        return solution;
+        return this.getSolution(domain, solution);
     }
 }

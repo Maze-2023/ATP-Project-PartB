@@ -11,7 +11,7 @@ public class SearchableMaze3D implements ISearchable {
     Maze3DState[][][] s_maze;
     Maze3DState start;
     Maze3DState goal;
-    private List<AState> possibleStates;
+    private ArrayList<AState> possibleStates;
 
     public SearchableMaze3D(Maze3D m)
     {
@@ -61,7 +61,7 @@ public class SearchableMaze3D implements ISearchable {
     }
 
 
-    public List<AState> resetPossibleStates()
+    public ArrayList<AState> resetPossibleStates()
     {
         this.possibleStates = new ArrayList<>();
         for(int k=0; k< maze.depth; k++)
@@ -109,7 +109,7 @@ public class SearchableMaze3D implements ISearchable {
      * @return a list of states which create a legal solution
      */
     @Override
-    public List<AState> getAllPossibleStates(List<AState> states)
+    public ArrayList<AState> getAllPossibleStates(List<AState> states)
     {
         this.possibleStates = new ArrayList<>();
         for(AState s: states){

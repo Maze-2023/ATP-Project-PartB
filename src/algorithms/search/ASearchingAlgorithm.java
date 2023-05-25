@@ -15,4 +15,16 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm, Serial
         return numOfNode;
     }
 
+    public Solution getSolution(ISearchable domain, Solution solution){
+        solution.addToPath(domain.getGoal()); // start from the end to promise a legal path
+        AState currentState = domain.getGoal();
+
+        //backtrack to get solution path
+        while (currentState.getParent() != null) { // run until start (parent is null)
+            solution.addToPath(currentState.getParent());
+            numOfNode++;
+            currentState = currentState.getParent();
+        }
+        return solution;
+    }
 }

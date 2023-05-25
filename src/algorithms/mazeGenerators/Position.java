@@ -15,6 +15,11 @@ public class Position implements Serializable {
         this.colum = colum;
     }
 
+    public Position(Position p){
+        this.row = p.row;
+        this.colum = p.colum;
+    }
+
     // getters
     public int getRowIndex() {
         return row;

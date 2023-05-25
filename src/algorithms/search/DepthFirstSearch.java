@@ -58,16 +58,7 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
     public Solution solve(ISearchable domain) {
         DFS(domain, domain.getStart());
         Solution solution = new Solution();
-        solution.addToPath(domain.getGoal()); // start from the end to promise a legal path
-        AState currentState = domain.getGoal();
-
-        //backtrack to get solution path
-        while (currentState.getParent() != null) { // run until start (parent is null)
-            solution.addToPath(currentState.getParent());
-            numOfNode++;
-            currentState = currentState.getParent();
-        }
-        return solution;
+        return this.getSolution(domain, solution);
     }
 
 

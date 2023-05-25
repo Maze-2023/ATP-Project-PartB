@@ -18,6 +18,10 @@ public class Solution implements Serializable {
         this.solutionPath = new ArrayList<>();
     }
 
+    public Solution(Solution toCopy){
+        this.solutionPath = toCopy.solutionPath;
+    }
+
     //get method
     public ArrayList<AState> getSolutionPath()
     {

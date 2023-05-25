@@ -1,5 +1,6 @@
 package algorithms.search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,6 @@ public interface ISearchable {
      AState getGoal();
 
      //methods regarding possible states
-     List<AState> getAllPossibleStates(List<AState> list);
-     List<AState> resetPossibleStates();
+     ArrayList<AState> getAllPossibleStates(List<AState> list);
+     ArrayList<AState> resetPossibleStates();
 }
