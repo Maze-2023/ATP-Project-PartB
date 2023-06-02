@@ -18,7 +18,7 @@ public class Configurations {
         try {
             OutputStream outputStream = new FileOutputStream("resources\\config.properties");
             properties = new Properties();
-            int size = 5;
+            int size = Runtime.getRuntime().availableProcessors();
             properties.setProperty("threadPoolSize", String.valueOf(size));
             properties.setProperty("mazeGeneratingAlgorithm", "MyMazeGenerator");
             properties.setProperty("mazeSearchingAlgorithm", "BestFirstSearch");

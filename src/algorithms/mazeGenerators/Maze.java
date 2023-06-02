@@ -39,16 +39,21 @@ public class Maze implements Serializable {
     public Maze(byte[]b_maze)
     {
         this.rows = b_maze[0];
-        this.column = b_maze[1];
+        if(this.rows < 0)
+            this.rows = b_maze[1] * 0x80 + b_maze[2];
+        this.column = b_maze[3];
+        if(this.column < 0)
+            this.column = b_maze[4] * 0x80 + b_maze[5];
+
         this.frame=new int[rows][column];
-        this.startPoint = new Position(b_maze[2],b_maze[3]);
+        this.startPoint = new Position(b_maze[6],b_maze[7]);
         if(rows == 0 && column == 0)
             this.endPoint=startPoint;
         else
-            this.endPoint = new Position(b_maze[4], b_maze[5]);
+            this.endPoint = new Position(this.rows - 1, this.column - 1);
 
         //change frame
-        int k = 6;
+        int k = 10;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < column; j++) {
                 this.frame[i][j] = b_maze[k++];
@@ -141,15 +146,34 @@ public class Maze implements Serializable {
      */
     public byte[] toByteArray()
     {
-        byte[] b_maze = new byte[rows*column+6];
-        b_maze[0]= (byte) rows;
-        b_maze[1]= (byte) column;
-        b_maze[2]= (byte) startPoint.getRowIndex();
-        b_maze[3]= (byte) startPoint.getColumnIndex();
-        b_maze[4]= (byte) endPoint.getRowIndex();
-        b_maze[5]= (byte) endPoint.getColumnIndex();
+        byte[] b_maze = new byte[rows*column+10];
+        int capacity_r = 0;
+        int capacity_c = 0;
+        int leftover_r = 0;
+        int leftover_c = 0;
 
-        int k =6;
+        if(rows >= 0x80) {
+            capacity_r = rows / 0x80;
+            leftover_r = rows % 0x80;
+        }
+        b_maze[0]= (byte) rows;
+        b_maze[1]= (byte) capacity_r;
+        b_maze[2]= (byte) leftover_r;
+
+        if(column >= 0x80) {
+            capacity_c = column / 0x80;
+            leftover_c = column % 0x80;
+        }
+        b_maze[3]= (byte) column;
+        b_maze[4]= (byte) capacity_c;
+        b_maze[5]= (byte) leftover_c;
+
+        b_maze[6]= (byte) startPoint.getRowIndex();
+        b_maze[7]= (byte) startPoint.getColumnIndex();
+        b_maze[8]= (byte) endPoint.getRowIndex();
+        b_maze[9]= (byte) endPoint.getColumnIndex();
+
+        int k =10;
         //put maze into the array
         for(int i = 0; i<rows;i++)
             for (int j = 0; j<column;j++)
