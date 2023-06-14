@@ -38,6 +38,7 @@ public class Client implements IClientStrategy {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //comment
     }
 
     /**

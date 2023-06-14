@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Configurations {
     private static Configurations instance;
-    Properties properties;
+    public Properties properties;
 
     /**
      * Private constructor to prevent instantiation from outside the class.
@@ -16,7 +16,7 @@ public class Configurations {
      */
     private Configurations() {
         try {
-            OutputStream outputStream = new FileOutputStream("resources\\config.properties");
+            OutputStream outputStream = new FileOutputStream("src/main/resources/resources/config.properties");
             properties = new Properties();
             int size = Runtime.getRuntime().availableProcessors();
             properties.setProperty("threadPoolSize", String.valueOf(size));
